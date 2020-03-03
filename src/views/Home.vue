@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <component :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import loginForm from './LoginForm.vue'
+// import chat from './Chat.vue' 
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      error: null,
+      tempName: null,
+      users: {},
+    }
+  },
+  computed: {
+    currentComponent() {
+      return this.$store.getters.currentComponent
+    }
+  },
   components: {
-    HelloWorld
-  }
+    loginForm,
+    chat: () => import('./Chat.vue') //async component
+  },
 }
 </script>
